@@ -168,13 +168,14 @@ func buildConfig(configContent string, options config.HiddifyOptions) (string, e
 
 	finalconfig.Log.Output = ""
 	finalconfig.Experimental.ClashAPI.ExternalUI = "webui"
+	portStr := fmt.Sprintf("%d", options.ClashApiPort)
 	if options.AllowConnectionFromLAN {
-		finalconfig.Experimental.ClashAPI.ExternalController = "0.0.0.0:6756"
+		finalconfig.Experimental.ClashAPI.ExternalController = "0.0.0.0:" + portStr
 	} else {
-		finalconfig.Experimental.ClashAPI.ExternalController = "127.0.0.1:6756"
+		finalconfig.Experimental.ClashAPI.ExternalController = "127.0.0.1:" + portStr
 	}
 
-	fmt.Printf("Open http://localhost:6756/ui/?secret=%s in your browser\n", finalconfig.Experimental.ClashAPI.Secret)
+	fmt.Printf("Open http://localhost:%s/ui/?secret=%s in your browser\n", portStr, finalconfig.Experimental.ClashAPI.Secret)
 
 	if err := Setup("./", "./", "./tmp", 0, false); err != nil {
 		return "", fmt.Errorf("failed to set up global configuration: %w", err)

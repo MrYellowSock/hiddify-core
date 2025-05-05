@@ -19,7 +19,7 @@ jobs:
   update_wrt_hash:
     permissions: write-all
     runs-on: ubuntu-latest
-    if: ${{ inputs.channel=='prod' }}
+    if: always()
     steps:
       - uses: actions/checkout@v4
       - run: |
@@ -168,7 +168,7 @@ jobs:
 
   upload-release:
     permissions: write-all
-    if: ${{ inputs.channel=='prod' }}
+    if: always()
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -204,7 +204,7 @@ jobs:
 
   make-upload-docker:
     permissions: write-all
-    if: ${{ inputs.channel=='prod' }}
+    if: always()
     needs: [upload-release]
     
     runs-on: ubuntu-latest
